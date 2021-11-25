@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+  run-service:
+    docker:
+      - image: circleci/node:16.13.0-bullseye-browsers-legacy
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: check directory
+          command: |
+            pwd && ls
+      - run:
+          name: install dependencies
+          command: |
+            yarn install
+workflows:
+  push:
+    jobs:
+      - run-service:
+          filters:
+            branches:
+              only:
+                - /.*/
