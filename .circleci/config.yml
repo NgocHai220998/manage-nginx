@@ -22,8 +22,7 @@ jobs:
       - run:
           name: Access Server and deploy
           command: |
-            ssh -oStrictHostKeyChecking=no $USER@$DOMAIN_NAME 
-            cd codes/manage-nginx && git pull origin main && pwd && ../bin/deploy.sh
+            ssh -oStrictHostKeyChecking=no $USER@$DOMAIN_NAME ./deploy/index
 workflows:
   push:
     jobs:
