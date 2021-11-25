@@ -20,13 +20,9 @@ jobs:
           fingerprints:
             - $SSH_KEY_FINGERPRINT
       - run:
-          name: Access Server
+          name: Access Server and deploy
           command: |
-            ssh -oStrictHostKeyChecking=no $USER@$DOMAIN_NAME ls
-      - run:
-          name: redirect to project and install
-          command: |
-            cd codes/manage-nginx && yarn install
+            ssh -oStrictHostKeyChecking=no $USER@$DOMAIN_NAME cd codes/manage-nginx && git pull origin main && deploy.sh
 workflows:
   push:
     jobs:
