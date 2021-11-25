@@ -3,11 +3,11 @@ const app = express();
 const port = 3000;
 
 app.get("/", (req, res) => {
-  res.send("Home page!!! Update ne 3000 Update Nguyen Ngoc Hai");
+  res.send("Home page!!! Port: 3000");
 });
 
-app.get("/admin", (req, res) => {
-  res.send("Admin page!!!");
+app.get("/hainn", (req, res) => {
+  res.send("Hainn page!!!");
 });
 
 app.listen(port, () => {
