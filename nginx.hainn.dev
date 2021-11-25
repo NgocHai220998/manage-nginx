@@ -9,7 +9,11 @@ server {
   location / {
     proxy_pass http://localhost:3000;
   }
-  
+
+  location /admin {
+    proxy_pass http://localhost:3000;
+  }
+
   listen 443 ssl; # managed by Certbot
   ssl_certificate /etc/letsencrypt/live/hainn.dev/fullchain.pem; # managed by Certbot
   ssl_certificate_key /etc/letsencrypt/live/hainn.dev/privkey.pem; # managed by Certbot
