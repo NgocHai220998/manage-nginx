@@ -1,33 +1,41 @@
-server {
-  server_name hainn.dev;
-  proxy_http_version 1.1;
-  proxy_set_header Upgrade $http_upgrade;
-  proxy_set_header Connection 'upgrade';
-  proxy_set_header Host $host;
-  proxy_cache_bypass $http_upgrade;
-
-  location / {
-    proxy_pass http://localhost:3000;
+http {
+  upstream hainndev {
+    server 127.0.0.1:3000 weight=3;
+    server 127.0.0.1:8081;
   }
 
-  location /admin {
-    proxy_pass http://localhost:8081;
+  server {
+    server_name hainn.dev;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection 'upgrade';
+    proxy_set_header Host $host;
+    proxy_cache_bypass $http_upgrade;
+
+    location / {
+      proxy_pass http://hainndev;
+    }
+
+    location /admin {
+      proxy_pass http://localhost:8081;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/hainn.dev/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/hainn.dev/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
   }
-
-  listen 443 ssl; # managed by Certbot
-  ssl_certificate /etc/letsencrypt/live/hainn.dev/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/hainn.dev/privkey.pem; # managed by Certbot
-  include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-  ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
-}
-server {
+  server {
     if ($host = hainn.dev) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
-  server_name hainn.dev;
+    server_name hainn.dev;
     listen 80;
     return 404; # managed by Certbot
+  }
 }
+
