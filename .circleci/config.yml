@@ -23,6 +23,10 @@ jobs:
           name: Access Server
           command: |
             ssh -oStrictHostKeyChecking=no $USER@$DOMAIN_NAME ls
+      - run:
+          name: redirect to project and install
+          command: |
+            cd codes/manage-nginx && yarn install
 workflows:
   push:
     jobs:
