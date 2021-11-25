@@ -3,7 +3,7 @@ const app = express();
 const port = 3000;
 
 app.get("/", (req, res) => {
-  res.send("Home page!!! Update ne 3000");
+  res.send("Home page!!! Update ne 3000 Update Nguyen Ngoc Hai");
 });
 
 app.get("/admin", (req, res) => {
